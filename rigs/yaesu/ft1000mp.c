@@ -310,7 +310,7 @@ const struct rig_caps ft1000mp_caps =
     RIG_MODEL(RIG_MODEL_FT1000MP),
     .model_name =         "FT-1000MP",
     .mfg_name =           "Yaesu",
-    .version =            "20210318.0",
+    .version =            "20210913.0",
     .copyright =          "LGPL",
     .status =             RIG_STATUS_STABLE,
     .rig_type =           RIG_TYPE_TRANSCEIVER,
@@ -834,7 +834,7 @@ static int ft1000mp_set_freq(RIG *rig, vfo_t vfo, freq_t freq)
         RETURNFUNC(-RIG_ENIMPL);
 
     default:
-        rig_debug(RIG_DEBUG_WARN, "%s: unknown VFO %d\n", __func__, vfo);
+        rig_debug(RIG_DEBUG_WARN, "%s: unknown VFO %0x\n", __func__, vfo);
         RETURNFUNC(-RIG_EINVAL);
     }
 
@@ -848,7 +848,6 @@ static int ft1000mp_set_freq(RIG *rig, vfo_t vfo, freq_t freq)
 
     to_bcd(p->p_cmd, freq / 10, 8); /* store bcd format in in p_cmd */
 
-    // cppcheck-suppress *
     rig_debug(RIG_DEBUG_TRACE, "%s: freq = %"PRIfreq" Hz\n", __func__,
               (freq_t)from_bcd(p->p_cmd, 8) * 10);
 
@@ -1320,11 +1319,10 @@ static int ft1000mp_set_func(RIG *rig, vfo_t vfo, setting_t func, int status)
     default:
         rig_debug(RIG_DEBUG_ERR, "%s: Unsupported set_func %s", __func__,
                   rig_strfunc(func));
-        RETURNFUNC(-RIG_EINVAL);
     }
-
     RETURNFUNC(-RIG_EINVAL);
 }
+
 static int ft1000mp_get_func(RIG *rig, vfo_t vfo, setting_t func, int *status)
 {
     int retval;
