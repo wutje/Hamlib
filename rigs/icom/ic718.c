@@ -70,10 +70,10 @@
 
 static const struct icom_priv_caps IC718_priv_caps =
 {
-    0x5e,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic718_ts_sc_list
+    .re_civ_addr  = 0x5e,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic718_ts_sc_list
 };
 
 const struct rig_caps ic718_caps =

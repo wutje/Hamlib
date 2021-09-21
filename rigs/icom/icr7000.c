@@ -51,10 +51,10 @@ static int r7000_set_freq(RIG *rig, vfo_t vfo, freq_t freq);
 
 static struct icom_priv_caps icr7000_priv_caps =
 {
-    0x08,   /* default address */
-    0,      /* 731 mode */
-    0,      /* no XCHG */
-    r7100_ts_sc_list
+    .re_civ_addr  = 0x08,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,      /* no XCHG */
+    .ts_sc_list   = r7100_ts_sc_list
 };
 /*
  * ICR7000 rigs capabilities.
@@ -166,10 +166,10 @@ const struct rig_caps icr7000_caps =
 
 static struct icom_priv_caps icr7100_priv_caps =
 {
-    0x34,   /* default address */
-    0,      /* 731 mode */
-    0,      /* no XCHG */
-    r7100_ts_sc_list
+    .re_civ_addr  = 0x34,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,      /* no XCHG */
+    .ts_sc_list   = r7100_ts_sc_list
 };
 /*
  * ICR7100A rig capabilities.

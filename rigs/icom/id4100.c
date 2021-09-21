@@ -79,9 +79,9 @@
  */
 static struct icom_priv_caps id4100_priv_caps =
 {
-    0x9A,   /* default address */
-    0,      /* 731 mode */
-    1,      /* no XCHG */
+    .re_civ_addr  = 0x9A,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 1,      /* no XCHG */
 };
 
 const struct rig_caps id4100_caps =

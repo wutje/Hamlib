@@ -99,10 +99,10 @@ static int icr75_get_parm(RIG *rig, setting_t parm, value_t *val);
 
 static struct icom_priv_caps icr75_priv_caps =
 {
-    0x5a,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    r75_ts_sc_list,
+    .re_civ_addr  = 0x5a,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = r75_ts_sc_list,
     .antack_len = 2,
     .ant_count = 2
 };

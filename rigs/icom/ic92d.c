@@ -89,10 +89,10 @@ const struct ts_sc_list ic92d_ts_sc_list[] =
  */
 static const struct icom_priv_caps ic92d_priv_caps =
 {
-    0x01,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic92d_ts_sc_list,
+    .re_civ_addr  = 0x01,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic92d_ts_sc_list,
     .serial_full_duplex = 1
 };
 

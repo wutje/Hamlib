@@ -42,10 +42,10 @@
  */
 static const struct icom_priv_caps ic475_priv_caps =
 {
-    0x14,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic737_ts_sc_list
+    .re_civ_addr  = 0x14,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic737_ts_sc_list
 };
 
 const struct rig_caps ic475_caps =
@@ -147,10 +147,10 @@ const struct rig_caps ic475_caps =
 
 static const struct icom_priv_caps ic575_priv_caps =
 {
-    0x16,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic737_ts_sc_list
+    .re_civ_addr  = 0x16,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic737_ts_sc_list
 };
 
 const struct rig_caps ic575_caps =

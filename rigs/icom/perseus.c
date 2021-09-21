@@ -65,9 +65,9 @@ static void perseus_i2r_mode(RIG *rig, unsigned char md, int pd,
 
 static struct icom_priv_caps perseus_priv_caps =
 {
-    0xE1,   /* default address */
-    0,      /* 731 mode */
-    0,      /* no XCHG */
+    .re_civ_addr  = 0xE1,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,      /* no XCHG */
     .r2i_mode = perseus_r2i_mode,
     .i2r_mode = perseus_i2r_mode,
 };

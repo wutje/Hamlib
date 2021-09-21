@@ -112,10 +112,10 @@ int ic7200_get_level(RIG *rig, vfo_t vfo, setting_t level, value_t *val);
  */
 static const struct icom_priv_caps IC7200_priv_caps =
 {
-    0x76,    /* default address */
-    0,       /* 731 mode */
-    0,       /* no XCHG */
-    ic7200_ts_sc_list,
+    .re_civ_addr  = 0x76,    /* default address */
+    .civ_731_mode = 0,       /* 731 mode */
+    .no_xchg      = 0,       /* no XCHG */
+    .ts_sc_list   = ic7200_ts_sc_list,
     .agc_levels_present = 1,
     .agc_levels = {
         { .level = RIG_AGC_OFF, .icom_level = 0 },

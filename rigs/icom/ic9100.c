@@ -100,10 +100,10 @@ struct cmdparams ic9100_extcmds[] =
 
 static const struct icom_priv_caps ic9100_priv_caps =
 {
-    0x7c,           /* default address */
-    0,              /* 731 mode */
-    1,              /* no XCHG to avoid display flicker */
-    ic910_ts_sc_list,   /* FIXME */
+    .re_civ_addr  = 0x7c,           /* default address */
+    .civ_731_mode = 0,              /* 731 mode */
+    .no_xchg      = 1,              /* no XCHG to avoid display flicker */
+    .ts_sc_list   = ic910_ts_sc_list,   /* FIXME */
     .antack_len = 2,
     .ant_count = 2,
     .extcmds = ic9100_extcmds,

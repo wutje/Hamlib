@@ -57,10 +57,10 @@ static int omni6_get_rit(RIG *rig, vfo_t vfo, shortfreq_t *rit);
 
 static struct icom_priv_caps omnivip_priv_caps =
 {
-    0x04,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    NULL    /* TODO */
+    .re_civ_addr  = 0x04,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = NULL    /* TODO */
 };
 
 const struct rig_caps omnivip_caps =
