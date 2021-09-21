@@ -186,10 +186,10 @@ struct cmdparams ic7100_extcmds[] =
  */
 static const struct icom_priv_caps ic7100_priv_caps =
 {
-    0x88,           /* default address */
-    0,              /* 731 mode */
-    0,              /* no XCHG */
-    ic7100_ts_sc_list,   /* FIXME */
+    .re_civ_addr  = 0x88,           /* default address */
+    .civ_731_mode = 0,              /* 731 mode */
+    .no_xchg      = 0,              /* no XCHG */
+    .ts_sc_list   = ic7100_ts_sc_list,   /* FIXME */
     .agc_levels_present = 1,
     .agc_levels = {
         { .level = RIG_AGC_FAST, .icom_level = 1 },

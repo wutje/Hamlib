@@ -59,9 +59,9 @@
 
 static const struct icom_priv_caps ic2730_priv_caps =
 {
-    0x90,   /* default address */
-    0,      /* 731 mode */
-    1,      /* no XCHG */
+    .re_civ_addr  = 0x90,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 1,      /* no XCHG */
 };
 
 const struct rig_caps ic2730_caps =

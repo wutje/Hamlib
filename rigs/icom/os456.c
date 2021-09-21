@@ -66,10 +66,10 @@ extern struct confparams opto_ext_parms[];
 
 static struct icom_priv_caps os456_priv_caps =
 {
-    0x80,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    NULL,
+    .re_civ_addr  = 0x80,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = NULL,
     .settle_time = 20,
 };
 

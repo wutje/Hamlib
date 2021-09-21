@@ -42,10 +42,10 @@
 
 static struct icom_priv_caps icr71_priv_caps =
 {
-    0x1a,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic737_ts_sc_list    /* none actually */
+    .re_civ_addr  = 0x1a,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic737_ts_sc_list    /* none actually */
 };
 
 const struct rig_caps icr71_caps =

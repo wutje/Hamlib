@@ -131,10 +131,10 @@ static int ic910_r2i_mode(RIG *rig, vfo_t vfo, rmode_t mode, pbwidth_t width,
 
 static const struct icom_priv_caps ic910_priv_caps =
 {
-    0x60,           /* default address */
-    0,              /* 731 mode */
-    1,              /* no XCHG to avoid display flicker */
-    ic910_ts_sc_list,
+    .re_civ_addr  = 0x60,           /* default address */
+    .civ_731_mode = 0,              /* 731 mode */
+    .no_xchg      = 1,              /* no XCHG to avoid display flicker */
+    .ts_sc_list   = ic910_ts_sc_list,
     .r2i_mode = ic910_r2i_mode
 };
 

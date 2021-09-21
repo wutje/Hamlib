@@ -126,10 +126,10 @@ static int x108g_set_split_mode(RIG *rig, vfo_t vfo, rmode_t tx_mode,
  */
 static struct icom_priv_caps x108g_priv_caps =
 {
-    0x70,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic7200_ts_sc_list
+    .re_civ_addr  = 0x70,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic7200_ts_sc_list
 };
 
 

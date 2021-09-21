@@ -140,10 +140,10 @@ static int ic706_r2i_mode(RIG *rig, vfo_t vfo, rmode_t mode, pbwidth_t width,
  */
 static const struct icom_priv_caps ic706_priv_caps =
 {
-    0x48,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic706_ts_sc_list,
+    .re_civ_addr  = 0x48,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic706_ts_sc_list,
     .serial_USB_echo_check = 1,  /* USB CI-V may not echo */
     .r2i_mode = ic706_r2i_mode
 };
@@ -278,10 +278,10 @@ const struct rig_caps ic706_caps =
 
 static const struct icom_priv_caps ic706mkii_priv_caps =
 {
-    0x4e,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic706_ts_sc_list,
+    .re_civ_addr  = 0x4e,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic706_ts_sc_list,
     .serial_USB_echo_check = 1,  /* USB CI-V may not echo */
     .r2i_mode = ic706_r2i_mode
 };
@@ -440,10 +440,10 @@ const struct rig_caps ic706mkii_caps =
  */
 static const struct icom_priv_caps ic706mkiig_priv_caps =
 {
-    0x58,   /* default address */
-    0,      /* 731 mode */
-    0,    /* no XCHG */
-    ic706_ts_sc_list,
+    .re_civ_addr  = 0x58,   /* default address */
+    .civ_731_mode = 0,      /* 731 mode */
+    .no_xchg      = 0,    /* no XCHG */
+    .ts_sc_list   = ic706_ts_sc_list,
     .serial_USB_echo_check = 1,  /* USB CI-V may not echo */
     .r2i_mode = ic706_r2i_mode
 };
