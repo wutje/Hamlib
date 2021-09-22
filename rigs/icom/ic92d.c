@@ -90,7 +90,7 @@ const struct ts_sc_list ic92d_ts_sc_list[] =
 static const struct icom_priv_caps ic92d_priv_caps =
 {
     .re_civ_addr  = 0x01,   /* default address */
-    .ts_sc_list   = ic92d_ts_sc_list,
+    .ts_sc_list   = ic92d_ts_sc_list, /* TODO it is defined but set_ts_com nor get_ts_icom is implemented ?!? */
     .serial_full_duplex = 1
 };
 

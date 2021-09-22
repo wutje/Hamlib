@@ -119,7 +119,7 @@ int icr30_set_mode(RIG *rig, vfo_t vfo, rmode_t mode, pbwidth_t width)
 static struct icom_priv_caps icr30_priv_caps =
 {
     .re_civ_addr  = 0x9c, /* default address */
-    .ts_sc_list   = r8500_ts_sc_list, /* wrong, but don't have set_ts anyway */
+    .ts_sc_list   = r8500_ts_sc_list, /* wrong, but we have get_ts and set_ts!! */
     .antack_len = 2,
     .ant_count = 2,
     .r2i_mode = icr30_r2i_mode,

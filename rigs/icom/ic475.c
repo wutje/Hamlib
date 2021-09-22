@@ -43,7 +43,6 @@
 static const struct icom_priv_caps ic475_priv_caps =
 {
     .re_civ_addr  = 0x14,   /* default address */
-    .ts_sc_list   = ic737_ts_sc_list
 };
 
 const struct rig_caps ic475_caps =
@@ -146,7 +145,6 @@ const struct rig_caps ic475_caps =
 static const struct icom_priv_caps ic575_priv_caps =
 {
     .re_civ_addr  = 0x16,   /* default address */
-    .ts_sc_list   = ic737_ts_sc_list
 };
 
 const struct rig_caps ic575_caps =

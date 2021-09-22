@@ -43,7 +43,6 @@
 static struct icom_priv_caps icr71_priv_caps =
 {
     .re_civ_addr  = 0x1a,   /* default address */
-    .ts_sc_list   = ic737_ts_sc_list    /* none actually */
 };
 
 const struct rig_caps icr71_caps =
