@@ -67,7 +67,6 @@ extern struct confparams opto_ext_parms[];
 static struct icom_priv_caps os456_priv_caps =
 {
     .re_civ_addr  = 0x80,   /* default address */
-    .ts_sc_list   = NULL,
     .settle_time = 20,
 };
 

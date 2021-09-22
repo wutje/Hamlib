@@ -48,7 +48,6 @@
 static struct icom_priv_caps icrx7_priv_caps =
 {
     .re_civ_addr  = 0x78,   /* default address */
-    .ts_sc_list   = r8500_ts_sc_list    /* wrong, but don't have set_ts anyway */
 };
 
 const struct rig_caps icrx7_caps =
