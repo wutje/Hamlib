@@ -32,6 +32,7 @@
 #include <unistd.h>     /* UNIX standard function definitions */
 // cppcheck-suppress *
 #include <math.h>
+#include <stdbool.h>
 
 #include <hamlib/rig.h>
 #include <serial.h>
@@ -6302,7 +6303,7 @@ int icom_set_ts(RIG *rig, vfo_t vfo, shortfreq_t ts)
     rig_debug(RIG_DEBUG_VERBOSE, "%s called\n", __func__);
     priv_caps = (const struct icom_priv_caps *) rig->caps->priv;
 
-    for (i = 0; i < HAMLIB_TSLSTSIZ; i++)
+    for (i = 0; priv_caps->ts_sc_list[i].ts > 0; i++)
     {
         if (priv_caps->ts_sc_list[i].ts == ts)
         {
@@ -6311,7 +6312,7 @@ int icom_set_ts(RIG *rig, vfo_t vfo, shortfreq_t ts)
         }
     }
 
-    if (i >= HAMLIB_TSLSTSIZ)
+    if (ts_sc == 0)
     {
         RETURNFUNC(-RIG_EINVAL);   /* not found, unsupported */
     }
@@ -6350,6 +6351,7 @@ int icom_get_ts(RIG *rig, vfo_t vfo, shortfreq_t *ts)
     const struct icom_priv_caps *priv_caps;
     unsigned char tsbuf[MAXFRAMELEN];
     int ts_len, i, retval;
+    bool found = false;
 
     rig_debug(RIG_DEBUG_VERBOSE, "%s called\n", __func__);
     priv_caps = (const struct icom_priv_caps *) rig->caps->priv;
@@ -6372,16 +6374,17 @@ int icom_get_ts(RIG *rig, vfo_t vfo, shortfreq_t *ts)
         RETURNFUNC(-RIG_ERJCTED);
     }
 
-    for (i = 0; i < HAMLIB_TSLSTSIZ; i++)
+    for (i = 0; priv_caps->ts_sc_list[i].ts > 0; i++)
     {
         if (priv_caps->ts_sc_list[i].sc == tsbuf[1])
         {
             *ts = priv_caps->ts_sc_list[i].ts;
+            found = true;
             break;
         }
     }
 
-    if (i >= HAMLIB_TSLSTSIZ)
+    if (!found)
     {
         RETURNFUNC(-RIG_EPROTO);   /* not found, unsupported */
     }
