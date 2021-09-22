@@ -84,7 +84,6 @@ int id51_tokens[] = { TOK_DSTAR_DSQL, TOK_DSTAR_CALL_SIGN, TOK_DSTAR_MESSAGE, TO
 static struct icom_priv_caps id51_priv_caps =
 {
     .re_civ_addr  = 0x86,   /* default address */
-    .civ_731_mode = 0,      /* 731 mode */
     .no_xchg      = 1,      /* no XCHG */
 };
 

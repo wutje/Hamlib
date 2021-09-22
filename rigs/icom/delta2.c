@@ -57,7 +57,6 @@ static const struct icom_priv_caps delta2_priv_caps =
 {
     .re_civ_addr  = 0x01,   /* default address */
     .civ_731_mode = 1,     /* 731 mode */
-    .no_xchg      = 0,    /* no XCHG */
     .ts_sc_list   = ic737_ts_sc_list  /* TODO: ts_sc_list */
 };
 

@@ -48,8 +48,6 @@
 static struct icom_priv_caps icrx7_priv_caps =
 {
     .re_civ_addr  = 0x78,   /* default address */
-    .civ_731_mode = 0,      /* 731 mode */
-    .no_xchg      = 0,    /* no XCHG */
     .ts_sc_list   = r8500_ts_sc_list    /* wrong, but don't have set_ts anyway */
 };
 

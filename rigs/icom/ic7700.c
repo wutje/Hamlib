@@ -130,8 +130,6 @@ int ic7700_ext_tokens[] =
 static const struct icom_priv_caps ic7700_priv_caps =
 {
     .re_civ_addr  = 0x74,    /* default address */
-    .civ_731_mode = 0,       /* 731 mode */
-    .no_xchg      = 0,       /* no XCHG */
     .ts_sc_list   = ic756pro_ts_sc_list,
     .antack_len = 4,
     .ant_count = 3,

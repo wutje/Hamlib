@@ -122,8 +122,6 @@ static int r2i_mode(RIG *rig, vfo_t vfo, rmode_t mode, pbwidth_t width,
 static const struct icom_priv_caps ic756_priv_caps =
 {
     .re_civ_addr  = 0x50,    /* default address */
-    .civ_731_mode = 0,       /* 731 mode */
-    .no_xchg      = 0,       /* no XCHG */
     .ts_sc_list   = ic756_ts_sc_list,
     .antack_len = 3,
     .ant_count = 2,
@@ -286,8 +284,6 @@ const struct rig_caps ic756_caps =
 static const struct icom_priv_caps ic756pro_priv_caps =
 {
     .re_civ_addr  = 0x5c,    /* default address */
-    .civ_731_mode = 0,        /* 731 mode */
-    .no_xchg      = 0,    /* no XCHG */
     .ts_sc_list   = ic756pro_ts_sc_list,
     .antack_len = 3,
     .ant_count = 2,
@@ -456,8 +452,6 @@ const struct rig_caps ic756pro_caps =
 static const struct icom_priv_caps ic756pro2_priv_caps =
 {
     .re_civ_addr  = 0x64,    /* default address */
-    .civ_731_mode = 0,       /* 731 mode */
-    .no_xchg      = 0,       /* no XCHG */
     .ts_sc_list   = ic756pro_ts_sc_list,
     .antack_len = 3,
     .ant_count = 2,
@@ -885,8 +879,6 @@ static int ic756pro2_get_ext_parm(RIG *rig, token_t token, value_t *val)
 static const struct icom_priv_caps ic756pro3_priv_caps =
 {
     .re_civ_addr  = 0x6e,    /* default address */
-    .civ_731_mode = 0,       /* 731 mode */
-    .no_xchg      = 0,       /* no XCHG */
     .ts_sc_list   = ic756pro_ts_sc_list,
     .antack_len = 3,
     .ant_count = 2,

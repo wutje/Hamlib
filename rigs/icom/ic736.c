@@ -57,8 +57,6 @@
 static const struct icom_priv_caps ic736_priv_caps =
 {
     .re_civ_addr  = 0x40,   /* default address */
-    .civ_731_mode = 0,      /* 731 mode */
-    .no_xchg      = 0,    /* no XCHG */
     .ts_sc_list   = ic737_ts_sc_list
 };
 
