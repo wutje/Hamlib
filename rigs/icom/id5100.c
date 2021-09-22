@@ -80,7 +80,6 @@
 static struct icom_priv_caps id5100_priv_caps =
 {
     .re_civ_addr  = 0x8C,   /* default address */
-    .civ_731_mode = 0,      /* 731 mode */
     .no_xchg      = 1,      /* no XCHG */
 };
 

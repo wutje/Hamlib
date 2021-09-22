@@ -153,8 +153,6 @@ int ic7610_ext_tokens[] =
 static const struct icom_priv_caps ic7610_priv_caps =
 {
     .re_civ_addr  = 0x98,    /* default address */
-    .civ_731_mode = 0,       /* 731 mode */
-    .no_xchg      = 0,       /* no XCHG */
     .ts_sc_list   = ic756pro_ts_sc_list,
     .antack_len = 2,
     .ant_count = 2,

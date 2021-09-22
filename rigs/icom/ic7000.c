@@ -178,8 +178,6 @@ static int ic7000_r2i_mode(RIG *rig, vfo_t vfo, rmode_t mode, pbwidth_t width,
 static const struct icom_priv_caps IC7000_priv_caps =
 {
     .re_civ_addr  = 0x70,    /* default address */
-    .civ_731_mode = 0,       /* 731 mode */
-    .no_xchg      = 0,       /* no XCHG */
     .ts_sc_list   = ic7000_ts_sc_list,
     .agc_levels_present = 1,
     .agc_levels = {

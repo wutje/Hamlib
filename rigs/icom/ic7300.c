@@ -268,7 +268,6 @@ int ic705_ext_tokens[] =
 static const struct icom_priv_caps IC7300_priv_caps =
 {
     .re_civ_addr  = 0x94,   /* default address */
-    .civ_731_mode = 0,      /* 731 mode */
     .no_xchg      = 1,      /* no XCHG to avoid display flickering */
     .ts_sc_list   = ic7300_ts_sc_list,
     .agc_levels_present = 1,
@@ -364,7 +363,6 @@ static const struct icom_priv_caps IC7300_priv_caps =
 static const struct icom_priv_caps IC9700_priv_caps =
 {
     .re_civ_addr  = 0xA2,   /* default address */
-    .civ_731_mode = 0,      /* 731 mode */
     .no_xchg      = 1,      /* no XCHG to avoid display flickering */
     .ts_sc_list   = ic9700_ts_sc_list,
     .serial_USB_echo_check = 1,  /* USB CI-V may not echo */
@@ -411,7 +409,6 @@ static const struct icom_priv_caps IC9700_priv_caps =
 static const struct icom_priv_caps IC705_priv_caps =
 {
     .re_civ_addr  = 0xA4,   /* default address */
-    .civ_731_mode = 0,      /* 731 mode */
     .no_xchg      = 1,      /* no XCHG to avoid display flickering */
     .ts_sc_list   = ic705_ts_sc_list,
     .serial_USB_echo_check = 1,  /* USB CI-V may not echo */

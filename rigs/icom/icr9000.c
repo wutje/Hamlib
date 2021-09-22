@@ -60,8 +60,6 @@
 static struct icom_priv_caps icr9000_priv_caps =
 {
     .re_civ_addr  = 0x2a,   /* default address */
-    .civ_731_mode = 0,      /* 731 mode */
-    .no_xchg      = 0,      /* no XCHG */
     .ts_sc_list   = r9000_ts_sc_list,
     .antack_len = 2,
     .ant_count = 2
