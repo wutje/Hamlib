@@ -6303,6 +6303,14 @@ int icom_set_ts(RIG *rig, vfo_t vfo, shortfreq_t ts)
     rig_debug(RIG_DEBUG_VERBOSE, "%s called\n", __func__);
     priv_caps = (const struct icom_priv_caps *) rig->caps->priv;
 
+    /* This should never happen, but it is easy to misconfigure so check
+     * instead of plain crashing. */
+    if (!priv_caps->ts_sc_list)
+    {
+        rig_debug(RIG_DEBUG_ERR, "%s: Tuningstep list is NULL!\n", __func__);
+        RETURNFUNC(-RIG_EINTERNAL);
+    }
+
     for (i = 0; priv_caps->ts_sc_list[i].ts > 0; i++)
     {
         if (priv_caps->ts_sc_list[i].ts == ts)
@@ -6314,6 +6322,8 @@ int icom_set_ts(RIG *rig, vfo_t vfo, shortfreq_t ts)
 
     if (ts_sc == 0)
     {
+        rig_debug(RIG_DEBUG_ERR, "%s: %ld not in tuningstep list!\n",
+                __func__, ts);
         RETURNFUNC(-RIG_EINVAL);   /* not found, unsupported */
     }
 
@@ -6356,6 +6366,14 @@ int icom_get_ts(RIG *rig, vfo_t vfo, shortfreq_t *ts)
     rig_debug(RIG_DEBUG_VERBOSE, "%s called\n", __func__);
     priv_caps = (const struct icom_priv_caps *) rig->caps->priv;
 
+    /* This should never happen, but it is easy to misconfigure so check
+     * instead of plain crashing. */
+    if (!priv_caps->ts_sc_list)
+    {
+        rig_debug(RIG_DEBUG_ERR, "%s: Tuningstep list is NULL!\n", __func__);
+        RETURNFUNC(-RIG_EINTERNAL);
+    }
+
     retval = icom_transaction(rig, C_SET_TS, -1, NULL, 0, tsbuf, &ts_len);
 
     if (retval != RIG_OK)
@@ -6386,6 +6404,8 @@ int icom_get_ts(RIG *rig, vfo_t vfo, shortfreq_t *ts)
 
     if (!found)
     {
+        rig_debug(RIG_DEBUG_ERR, "%s: %d not in tuningstep list!\n",
+                __func__, tsbuf[1]);
         RETURNFUNC(-RIG_EPROTO);   /* not found, unsupported */
     }
 
