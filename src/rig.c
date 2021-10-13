@@ -6827,19 +6827,40 @@ const char *HAMLIB_API rig_copyright()
  * \brief get a cookie to grab rig control
  * \param rig   Not used
  * \param cookie_cmd The command to execute on \a cookie.
- * \param cookie     The cookie to operate on, cannot be NULL or RIG_EINVAL will be returned.
- * \param cookie_len The length of the cookie, must be #HAMLIB_COOKIE_SIZE or larger.
+ * \param cookie     Cookie to work on, if NULL #RIG_EINVAL will be returned.
+ * \param cookie_len The length of cookie, #HAMLIB_COOKIE_SIZE or larger.
+ *
+ * \return #RIG_OK on succes. #RIG_BUSBUSY when cookie is already given,
+ * #RIG_EINVAL if input is invalid, #RIG_EPROTO if cmd is unkown.
+ * Note that there are 3 possible return classes: OK, BUSY and ERROR.
+ * Ensure all 3 are handled. A retry on error will always return error again!
  *
  * #RIG_COOKIE_GET will set \a cookie with a cookie.
- * #RIG_COOKIE_RENEW will update the timeout with 1 second.
- * #RIG_COOKIE_RELEASE will release the cookie and allow a new one to be grabbed.
+ * #RIG_COOKIE_RENEW will update the timeout with 1 second from now.
+ * #RIG_COOKIE_RELEASE will release \a cookie. There is little value in checking
+ * the return value; either it is released or it was already released due to
+ * timeout, either is probably of no concern.
  *
  * Cookies should only be used when needed to keep commands sequenced correctly
  * For example, when setting both VFOA and VFOB frequency and mode
  * Example to wait for cookie, do rig commands, and release
  * \code
- *  while((rig_cookie(NULL, RIG_COOKIE_GET, cookie, sizeof(cookie))) != RIG_OK)
- *      hl_usleep(10*1000);
+ *  ret = rig_cookie(NULL, RIG_COOKIE_GET, cookie, sizeof(cookie)));
+ *  switch(ret) {
+ *      //Cooke assigned to us
+ *      case RIG_OK:
+ *      break;
+ *
+ *      //Cookie is held by someone else
+ *      case RIG_BUSBUSY:
+ *        while((rig_cookie(NULL, RIG_COOKIE_GET, cookie, sizeof(cookie))) !=
+ *          RIG_BUSBUSY)
+ *              hl_usleep(10*1000);
+ *
+ *      //Error, give up or try something else
+ *      default:
+ *        return ret;
+ *  }
  *
  *  //Pseudo code
  *  set_freq A;set mode A;set freq B;set modeB;
@@ -6883,8 +6904,8 @@ int HAMLIB_API rig_cookie(RIG *rig, enum cookie_e cookie_cmd, char *cookie,
     {
     case RIG_COOKIE_RELEASE:
         if (cookie_save[0] != 0
-                && strcmp(cookie, cookie_save) == 0) // matching cookie so we'll clear it
-        {
+                && strcmp(cookie, cookie_save) == 0)
+        {   // matching cookie so we'll clear it
             rig_debug(RIG_DEBUG_VERBOSE, "%s(%d): %s cookie released\n",
                       __FILE__, __LINE__, cookie_save);
             memset(cookie_save, 0, sizeof(cookie_save));
@@ -6893,22 +6914,26 @@ int HAMLIB_API rig_cookie(RIG *rig, enum cookie_e cookie_cmd, char *cookie,
         else // not the right cookie!!
         {
             rig_debug(RIG_DEBUG_ERR,
-                      "%s(%d): %s can't release cookie as cookie %s is active\n", __FILE__, __LINE__,
-                      cookie, cookie_save);
+                   "%s(%d): %s can't release cookie as cookie %s is active\n",
+                   __FILE__, __LINE__, cookie, cookie_save);
             ret = -RIG_BUSBUSY;
         }
 
         break;
 
     case RIG_COOKIE_RENEW:
-        rig_debug(RIG_DEBUG_VERBOSE, "%s(%d): %s comparing renew request to %s==%d\n",
-                  __FILE__, __LINE__, cookie, cookie_save, strcmp(cookie, cookie_save));
+        rig_debug(RIG_DEBUG_VERBOSE,
+                "%s(%d): %s comparing renew request to %s==%d\n",
+                  __FILE__, __LINE__, cookie, cookie_save,
+                  strcmp(cookie, cookie_save));
 
         if (cookie_save[0] != 0
-                && strcmp(cookie, cookie_save) == 0) // matching cookie so we'll renew it
+                && strcmp(cookie, cookie_save) == 0)
         {
-            rig_debug(RIG_DEBUG_VERBOSE, "%s(%d) %s renew request granted\n", __FILE__,
-                      __LINE__, cookie);
+            // matching cookie so we'll renew it
+            rig_debug(RIG_DEBUG_VERBOSE,
+                    "%s(%d) %s renew request granted\n", __FILE__, __LINE__,
+                    cookie);
             clock_gettime(CLOCK_REALTIME, &tp);
             time_last_used = tp.tv_sec + tp.tv_nsec / 1e9;
             ret = RIG_OK;
@@ -6925,18 +6950,19 @@ int HAMLIB_API rig_cookie(RIG *rig, enum cookie_e cookie_cmd, char *cookie,
 
     case RIG_COOKIE_GET:
 
-        // the way we expire cookies is if somebody else asks for one and the last renewal is > 1 second ago
-        // a polite client will have released the cookie
-        // we are just allow for a crashed client that fails to release:q
+        // the way we expire cookies is if somebody else asks for one and the
+        // last renewal is > 1 second ago a polite client will have released
+        // the cookie we are just allow for a crashed client that fails to
+        // release
 
         clock_gettime(CLOCK_REALTIME, &tp);
         double time_curr = tp.tv_sec + tp.tv_nsec / 1e9;
 
         if (cookie_save[0] != 0 && (strcmp(cookie_save, cookie) == 0)
-                && (time_curr - time_last_used < 1))  // then we will deny the request
+                && (time_curr - time_last_used < 1)) // deny the request
         {
-            rig_debug(RIG_DEBUG_ERR, "%s(%d): %s cookie is in use\n", __FILE__, __LINE__,
-                      cookie_save);
+            rig_debug(RIG_DEBUG_ERR, "%s(%d): %s cookie is in use\n",
+                    __FILE__, __LINE__, cookie_save);
             ret = -RIG_BUSBUSY;
         }
         else
@@ -6944,8 +6970,9 @@ int HAMLIB_API rig_cookie(RIG *rig, enum cookie_e cookie_cmd, char *cookie,
             if (cookie_save[0] != 0)
             {
                 rig_debug(RIG_DEBUG_ERR,
-                          "%s(%d): %s cookie has expired after %.3f seconds....overriding with new cookie\n",
-                          __FILE__, __LINE__, cookie_save, time_curr - time_last_used);
+                      "%s(%d): %s cookie has expired after %.3f seconds...."
+                      "overriding with new cookie\n", __FILE__, __LINE__,
+                      cookie_save, time_curr - time_last_used);
             }
 
             date_strget(cookie, cookie_len);
@@ -6955,8 +6982,9 @@ int HAMLIB_API rig_cookie(RIG *rig, enum cookie_e cookie_cmd, char *cookie,
             snprintf(cookie + len, HAMLIB_COOKIE_SIZE - len, " %d\n", rand());
             strcpy(cookie_save, cookie);
             time_last_used = time_curr;
-            rig_debug(RIG_DEBUG_VERBOSE, "%s(%d): %s new cookie request granted\n",
-                      __FILE__, __LINE__, cookie_save);
+            rig_debug(RIG_DEBUG_VERBOSE,
+                    "%s(%d): %s new cookie request granted\n",
+                    __FILE__, __LINE__, cookie_save);
             ret = RIG_OK;
         }
 
