@@ -4590,8 +4590,14 @@ int newcat_get_level(RIG *rig, vfo_t vfo, setting_t level, value_t *val)
         {
             RETURNFUNC(-RIG_ENAVAIL);
         }
-
-        snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM3%c", cat_term);
+        if (is_ftdx9000)
+        {
+            snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM06%c", cat_term);
+        }
+        else
+        {
+            snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM3%c", cat_term);
+        }
         break;
 
     case RIG_LEVEL_VD_METER:
@@ -4599,8 +4605,14 @@ int newcat_get_level(RIG *rig, vfo_t vfo, setting_t level, value_t *val)
         {
             RETURNFUNC(-RIG_ENAVAIL);
         }
-
-        snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM8%c", cat_term);
+        if (is_ftdx9000)
+        {
+            snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM11%c", cat_term);
+        }
+        else
+        {
+            snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM8%c", cat_term);
+        }
         break;
 
     case RIG_LEVEL_ID_METER:
@@ -4608,8 +4620,14 @@ int newcat_get_level(RIG *rig, vfo_t vfo, setting_t level, value_t *val)
         {
             RETURNFUNC(-RIG_ENAVAIL);
         }
-
-        snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM7%c", cat_term);
+        if (is_ftdx9000)
+        {
+            snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM10%c", cat_term);
+        }
+        else
+        {
+            snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM7%c", cat_term);
+        }
         break;
 
     case RIG_LEVEL_ANTIVOX:
@@ -4647,7 +4665,7 @@ int newcat_get_level(RIG *rig, vfo_t vfo, setting_t level, value_t *val)
         }
         else
         {
-            RETURNFUNC(-RIG_EINVAL);
+            RETURNFUNC(-RIG_ENAVAIL);
         }
 
         break;
@@ -4691,7 +4709,7 @@ int newcat_get_level(RIG *rig, vfo_t vfo, setting_t level, value_t *val)
     case RIG_LEVEL_TEMP_METER:
         if (is_ftdx9000)
         {
-            snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM11%c", cat_term);
+            snprintf(priv->cmd_str, sizeof(priv->cmd_str), "RM14%c", cat_term);
         }
         else if (is_ftdx101d || is_ftdx101mp)
         {
@@ -4699,7 +4717,7 @@ int newcat_get_level(RIG *rig, vfo_t vfo, setting_t level, value_t *val)
         }
         else
         {
-            RETURNFUNC(-RIG_EINVAL);
+            RETURNFUNC(-RIG_ENAVAIL);
         }
 
         break;
