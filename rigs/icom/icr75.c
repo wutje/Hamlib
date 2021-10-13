@@ -250,7 +250,7 @@ const struct rig_caps icr75_caps =
  * Assumes rig!=NULL, rig->state.priv!=NULL, chan!=NULL
  * TODO: still a WIP --SF
  */
-int icr75_set_channel(RIG *rig, vfo_t vfo, const channel_t *chan)
+static int icr75_set_channel(RIG *rig, vfo_t vfo, const channel_t *chan)
 {
     struct icom_priv_data *priv;
     struct rig_state *rs;
@@ -319,7 +319,7 @@ int icr75_set_channel(RIG *rig, vfo_t vfo, const channel_t *chan)
  * Assumes rig!=NULL, rig->state.priv!=NULL, chan!=NULL
  * TODO: still a WIP --SF
  */
-int icr75_get_channel(RIG *rig, vfo_t vfo, channel_t *chan, int read_only)
+static int icr75_get_channel(RIG *rig, vfo_t vfo, channel_t *chan, int read_only)
 {
     struct icom_priv_data *priv;
     struct rig_state *rs;
@@ -429,7 +429,7 @@ int icr75_get_channel(RIG *rig, vfo_t vfo, channel_t *chan, int read_only)
     return RIG_OK;
 }
 
-int icr75_set_parm(RIG *rig, setting_t parm, value_t val)
+static int icr75_set_parm(RIG *rig, setting_t parm, value_t val)
 {
     unsigned char prmbuf[MAXFRAMELEN];
     int min, hr, sec;
@@ -517,7 +517,7 @@ int icr75_set_parm(RIG *rig, setting_t parm, value_t val)
     }
 }
 
-int icr75_get_parm(RIG *rig, setting_t parm, value_t *val)
+static int icr75_get_parm(RIG *rig, setting_t parm, value_t *val)
 {
     unsigned char prmbuf[MAXFRAMELEN], resbuf[MAXFRAMELEN];
     int prm_len, res_len;
