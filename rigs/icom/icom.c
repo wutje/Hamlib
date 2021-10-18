@@ -1898,7 +1898,7 @@ int icom_set_dsp_flt(RIG *rig, rmode_t mode, pbwidth_t width)
         flt_idx = (width / 200) - 1;  /* TBC: IC_7800? */
     }
     else if (mode & (RIG_MODE_CW | RIG_MODE_USB | RIG_MODE_LSB | RIG_MODE_RTTY |
-                     RIG_MODE_RTTYR))
+                     RIG_MODE_RTTYR | RIG_MODE_PKTUSB | RIG_MODE_PKTLSB))
     {
         if (width == 0)
         {
@@ -1957,6 +1957,8 @@ static int icom_set_mode_x26(RIG *rig, vfo_t vfo, rmode_t mode, int datamode,
     struct icom_priv_data *priv = rig->state.priv;
     int retval;
     unsigned char buf[3];
+    unsigned char ackbuf[MAXFRAMELEN];
+    int ack_len = sizeof(ackbuf);
 
     ENTERFUNC;
 
@@ -1986,7 +1988,7 @@ static int icom_set_mode_x26(RIG *rig, vfo_t vfo, rmode_t mode, int datamode,
     // buf[2] = filter // if Icom ever fixed this
     buf[2] = 1;
 
-    retval = icom_transaction(rig, cmd2, subcmd2, buf, 3, NULL, NULL);
+    retval = icom_transaction(rig, cmd2, subcmd2, buf, 3, ackbuf, &ack_len);
 
     if (retval != RIG_OK)
     {
@@ -2104,11 +2106,13 @@ int icom_set_mode_with_data(RIG *rig, vfo_t vfo, rmode_t mode,
         case RIG_MODE_PKTAM:
             datamode[0] = 0x01;
             datamode[1] = 0x02; // default to filter 2
+            if(width == RIG_PASSBAND_NOCHANGE) datamode[1] = twidth;
             break;
 
         default:
             datamode[0] = 0x00;
             datamode[1] = 0x02; // default to filter 2
+            if(width == RIG_PASSBAND_NOCHANGE) datamode[1] = twidth;
             break;
         }
 
@@ -2135,20 +2139,20 @@ int icom_set_mode_with_data(RIG *rig, vfo_t vfo, rmode_t mode,
             TRACE;
             retval =
                 icom_transaction(rig, C_CTL_MEM, dm_sub_cmd, datamode, 1, ackbuf, &ack_len);
-        }
 
-        if (retval != RIG_OK)
-        {
-            rig_debug(RIG_DEBUG_ERR, "%s: protocol error (%#.2x), len=%d\n",
-                      __func__, ackbuf[0], ack_len);
-        }
-        else
-        {
-            if (ack_len != 1 || (ack_len >= 1 && ackbuf[0] != ACK))
+            if (retval != RIG_OK)
             {
-                rig_debug(RIG_DEBUG_ERR,
-                          "%s: command not supported ? (%#.2x), len=%d\n",
+                rig_debug(RIG_DEBUG_ERR, "%s: protocol error (%#.2x), len=%d\n",
                           __func__, ackbuf[0], ack_len);
+            }
+            else
+            {
+                if (ack_len != 1 || (ack_len >= 1 && ackbuf[0] != ACK))
+                {
+                    rig_debug(RIG_DEBUG_ERR,
+                              "%s: command not supported ? (%#.2x), len=%d\n",
+                              __func__, ackbuf[0], ack_len);
+                }
             }
         }
     }
